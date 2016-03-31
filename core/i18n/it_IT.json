@@ -1,0 +1,22 @@
+{
+    "plugins/livebox/desktop/php/livebox.php": {
+        "Général": "Generale",
+        "Nom de la livebox": "Nom de la livebox",
+        "Objet parent": "Oggetto padre",
+        "Aucun": "Nessuno",
+        "Catégorie": "Categoria",
+        "Activer": "Attiva",
+        "Accéder à la carte": "Accedi alla mappa",
+        "Visible": "Visibile",
+        "IP de la livebox": "IP de la livebox",
+        "Compte de la livebox": "Compte de la livebox",
+        "Password de la livebox": "Password de la livebox",
+        "Indicateurs": "Indicatori",
+        "Nom": "Nome",
+        "Icône-action": "Icône-action",
+        "Sous-Type": "Sotto-tipo",
+        "Paramètres": "Impostazioni",
+        "Action": "Azione",
+        "Sauvegarder": "Salva"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "plugins/livebox/desktop/php/livebox.php": {
+        "Général": "Umum",
+        "Nom de la livebox": "Nom de la livebox",
+        "Objet parent": "Objek induk",
+        "Aucun": "Tak ada",
+        "Catégorie": "Kategori",
+        "Activer": "Mengaktifkan",
+        "Accéder à la carte": "Accéder à la carte",
+        "Visible": "Terlihat",
+        "IP de la livebox": "IP de la livebox",
+        "Compte de la livebox": "Compte de la livebox",
+        "Password de la livebox": "Password de la livebox",
+        "Indicateurs": "Indicateurs",
+        "Nom": "Nama",
+        "Icône-action": "Icône-action",
+        "Sous-Type": "Subtipe",
+        "Paramètres": "Parameter²",
+        "Action": "Tindakan",
+        "Sauvegarder": "Menyimpan"
+    }
+}

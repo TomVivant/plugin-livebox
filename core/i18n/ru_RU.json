@@ -1,0 +1,22 @@
+{
+    "plugins/livebox/desktop/php/livebox.php": {
+        "Général": "Главная",
+        "Nom de la livebox": "Имя livebox",
+        "Objet parent": "Родительский объект",
+        "Aucun": "Нет",
+        "Catégorie": "Категория",
+        "Activer": "Активировать",
+        "Accéder à la carte": "Доступ к меню",
+        "Visible": "Видимый",
+        "IP de la livebox": "IP livebox",
+        "Compte de la livebox": "Аккаунт livebox",
+        "Password de la livebox": "Пароль для livebox",
+        "Indicateurs": "Индикаторы",
+        "Nom": "Имя",
+        "Icône-action": "Иконка Действие",
+        "Sous-Type": "Под-Тип",
+        "Paramètres": "Параметры",
+        "Action": "Действие",
+        "Sauvegarder": "Сохранить"
+    }
+}
