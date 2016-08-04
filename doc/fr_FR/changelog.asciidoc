@@ -1,4 +1,5 @@
 [horizontal]
+1.15:: Ajout du delai de changement d'état de la synchro ADSL en seconde
 1.14:: Mise a jour des indicateurs, même si la valeur ne change pas pour les graphiques.
 1.13:: Ajout de bouton "WPS Push Button"
 + Liste des équipements

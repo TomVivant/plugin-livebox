@@ -296,6 +296,20 @@ class livebox extends eqLogic {
 						$cmd->setEventOnly(1);
 						$cmd->save();		
 					}
+
+					$cmd = $this->getCmd(null, 'lastchange');
+					if ( ! is_object($cmd)) {
+						$cmd = new liveboxCmd();
+						$cmd->setName('Durée de la synchronisation DSL');
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setLogicalId('lastchange');
+						$cmd->setUnite('s');
+						$cmd->setType('info');
+						$cmd->setSubType('numeric');
+						$cmd->setIsHistorized(1);
+						$cmd->setEventOnly(1);
+						$cmd->save();		
+					}
 				}
 				elseif ( $content->data->LinkType == "ethernet" ) {
 					log::add('livebox','debug','Connexion mode ethernet');
@@ -315,6 +329,11 @@ class livebox extends eqLogic {
 					}
 
 					$cmd = $this->getCmd(null, 'margebruitdescendant');
+					if ( is_object($cmd)) {
+						$cmd->remove();		
+					}	
+
+					$cmd = $this->getCmd(null, 'lastchange');
 					if ( is_object($cmd)) {
 						$cmd->remove();		
 					}
@@ -495,6 +514,8 @@ class livebox extends eqLogic {
 				if ( isset($content["status"]) )
 				{
 					foreach ( $content["status"] as $voip ) {
+						if ( strtolower($voip["enable"]) == "enabled" ) {
+
 						if ( ! isset($voip["signalingProtocol"]) ) {
 							$voip["signalingProtocol"] = strstr($voip["name"], "-", true);
 						}
@@ -538,6 +559,7 @@ class livebox extends eqLogic {
 							}
 						}
 					}
+				}
 				}
 			}
 
@@ -768,6 +790,13 @@ class livebox extends eqLogic {
 					}
 					$eqLogic_cmd->setCollectDate('');
 					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["DownstreamNoiseMargin"]/10);
+
+					$eqLogic_cmd = $this->getCmd(null, 'lastchange');
+					if ($eqLogic_cmd->execCmd(null, 2) != $eqLogic_cmd->formatValue($content["status"]["dsl"]["dsl0"]["LastChange"])) {
+						log::add('livebox','debug','Maj lastchange');
+					}
+					$eqLogic_cmd->setCollectDate('');
+					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["LastChange"]);
 				}
 			}
 		}
