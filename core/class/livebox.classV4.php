@@ -150,7 +150,7 @@ class livebox extends eqLogic {
 	}
 
 	function logOut() {
-		file_get_contents ($this->_http_mode.'://'.$this->getConfiguration('ip').'/logout');
+		@file_get_contents ($this->_http_mode.'://'.$this->getConfiguration('ip').'/logout');
 	}
 
 	function getPage($page, $option = array()) {
