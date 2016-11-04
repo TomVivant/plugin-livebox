@@ -1,22 +1,22 @@
 {
-    "plugins/livebox/desktop/php/livebox.php": {
-        "Général": "Главная",
-        "Nom de la livebox": "Имя livebox",
-        "Objet parent": "Родительский объект",
-        "Aucun": "Нет",
-        "Catégorie": "Категория",
-        "Activer": "Активировать",
-        "Accéder à la carte": "Доступ к меню",
-        "Visible": "Видимый",
-        "IP de la livebox": "IP livebox",
-        "Compte de la livebox": "Аккаунт livebox",
-        "Password de la livebox": "Пароль для livebox",
-        "Indicateurs": "Индикаторы",
-        "Nom": "Имя",
-        "Icône-action": "Иконка Действие",
-        "Sous-Type": "Под-Тип",
-        "Paramètres": "Параметры",
-        "Action": "Действие",
-        "Sauvegarder": "Сохранить"
+    "plugins\/livebox\/desktop\/php\/livebox.php": {
+        "Général": "Général",
+        "Nom de la livebox": "Nom de la livebox",
+        "Objet parent": "Objet parent",
+        "Aucun": "Aucun",
+        "Catégorie": "Catégorie",
+        "Activer": "Activer",
+        "Accéder à la carte": "Accéder à la carte",
+        "Visible": "Visible",
+        "IP de la livebox": "IP de la livebox",
+        "Compte de la livebox": "Compte de la livebox",
+        "Password de la livebox": "Password de la livebox",
+        "Indicateurs": "Indicateurs",
+        "Nom": "Nom",
+        "Icône-action": "Icône-action",
+        "Sous-Type": "Sous-Type",
+        "Paramètres": "Paramètres",
+        "Action": "Action",
+        "Sauvegarder": "Sauvegarder"
     }
 }

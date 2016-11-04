@@ -1,0 +1,31 @@
+[panel,primary]
+.Quelle est la fréquence de rafraichissement des informations ?
+--
+Le plugin actualise les informations toutes les minutes (modifiable dans le "Moteur de tâches")
+--
+
+.Est-il possible d'historiser les débits ?
+--
+Pour historiser il faut aller dans le menu Plugin => Communication => livebox et d'activer l'historique sur les indicateurs comme pour n'import quel indicateur.
+--
+
+.Avec quel livebox est-ce compatible ?
+--
+- Livebox 2
+- Livebox Play
+--
+
+.Est-ce compatible avec la fibre ?
+--
+Oui
+--
+
+.Je n'ai pas d'information sur le débit, est-ce normal ?
+--
+L'API de la livebox en mode FTTH ne fourni pas le débit. Nous ne pouvons donc pas le récupérer.
+--
+
+.Le mot de passe que je saisie ne fonctionne pas.
+--
+Le plugin ne suporte pas certains caractères spéciaux genre # et @.
+--
