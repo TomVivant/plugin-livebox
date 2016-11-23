@@ -48,7 +48,7 @@ function livebox_update() {
 }
 
 function livebox_remove() {
-    $cron = cron::byClassAndFunction('livebox', 'cron');
+    $cron = cron::byClassAndFunction('livebox', 'pull');
     if (is_object($cron)) {
 		$cron->stop();
         $cron->remove();
