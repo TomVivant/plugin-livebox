@@ -1,14 +1,14 @@
-== Monitoring
+== Überwachung
 
-=== Présentation
+=== Präsentation
 Ce plugin permet de récupérer des informations de la Livebox et de lancer des actions.
 
-==== Compatibilité :
+==== Kompatibilität :
 
 - Livebox 2
 - Livebox Play
 
-==== Informations visibles :
+==== Sichtbare Informationen :
 [horizontal]
 - *Etat connexion* : état de la connexion internet (xDSL ou Fibre)
 - *Etat synchro* : état de la synchronisation xDSL ou FTTH
@@ -38,12 +38,12 @@ image::../images/livebox1.png[align="center"]
 image::../images/livebox_screenshot2.png[align="center"]
 
 '''
-=== Installation/Configuration
+=== Installation/Konfiguration
 include::configuration.asciidoc[]
 
 '''
 === FAQ
 include::faq.asciidoc[]
 '''
-=== Changelog
+=== Änderungsprotokoll
 include::changelog.asciidoc[]
