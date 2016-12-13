@@ -1,4 +1,15 @@
 [panel,primary]
+.Pourquoi le plugin est gratuit ?
+--
+Ce plugin est gratuit pour que chacun puisse en profiter simplement. Si vous souhaitez tout de même faire un don au développeur du plugin, utilisez le lien suivant.
+link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE96NMVHY4YKE[Faire un don au développeur du plugin]
+--
+
+.J'aimerai remonter des erreurs/modifications directement dans le code ?
+--
+C'est tout à fait possible via https://github.com/guenneguezt/plugin-livebox[github]
+--
+
 .Quelle est la fréquence de rafraichissement des informations ?
 --
 Le plugin actualise les informations toutes les minutes (modifiable dans le "Moteur de tâches")
