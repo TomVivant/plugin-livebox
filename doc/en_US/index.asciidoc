@@ -1,9 +1,9 @@
 == Monitoring
 
-=== Présentation
+=== Introduction
 Ce plugin permet de récupérer des informations de la Livebox et de lancer des actions.
 
-==== Compatibilité :
+==== Compatibility:
 
 - Livebox 2
 - Livebox Play

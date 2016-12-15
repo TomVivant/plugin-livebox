@@ -1,9 +1,9 @@
 Nous allons maintenant paramétrer l'équipement. Pour se faire, cliquer sur *Plugins / Communicaton / Livebox*
 
-Puis définir :
+Then define :
 
-- Objet parent
-- Catégorie (optionnelle)
+- Parent object
+- Optional Category 
 - Activer (coché par défaut)
 - Visible (optionel si vous ne désirez pas le rendre visible sur le Dashboard)
 - Mot de passe de la Livebox (à modifier s'il ne s'agit pas de celui par défaut)
