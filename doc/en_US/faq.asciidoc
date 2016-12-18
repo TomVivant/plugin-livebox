@@ -28,7 +28,7 @@ Pour historiser il faut aller dans le menu Plugin => Communication => livebox et
 
 .Est-ce compatible avec la fibre ?
 --
-Oui
+Yes
 --
 
 .Je n'ai pas d'information sur le débit, est-ce normal ?
