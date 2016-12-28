@@ -1,5 +1,5 @@
 [horizontal]
-WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plugin-livebox/commits/master[Historique Commit]
+WARNING: Updates full details on : https://github.com/guenneguezt/plugin-livebox/commits/master[Historique Commit]
 
 1.16:: Ajout de la commande reboot
 1.15:: Ajout du delai de changement d'état de la synchro ADSL en seconde
