@@ -18,4 +18,4 @@ WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plu
 1.3:: Correction pour la téléphonie en H.323
 1.2:: Optimisation pour ne pas mettre à jour les données si elle le sont déjà.
 1.1:: Suppression de commande reset
-1.0:: première version bêta
+1.0:: Erste version beta.
