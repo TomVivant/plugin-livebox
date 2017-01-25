@@ -5,13 +5,13 @@ WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plu
 1.15:: Ajout du delai de changement d'état de la synchro ADSL en seconde
 1.14:: Mise a jour des indicateurs, même si la valeur ne change pas pour les graphiques.
 1.13:: Ajout de bouton "WPS Push Button"
-+ Liste des équipements
++ Liste der Geräte
 1.12:: Correction de variable cachees pour Cookies.
 1.11:: Modification de cron pour plus d'autonomie.
 1.10:: Ajout des informations de marge montante et descendante.
 1.9:: Support de plusieurs livebox.
 1.8:: Correction par rapport au nouveau core.
-1.7:: Correction bug de collecte
+1.7:: Mehrere Fehler behoben
 1.6:: Correction pour désinstallation sans livebox
 1.5:: Ajout de lien vers les options d'affichage
 1.4:: Ajout d'un Etat de livebox

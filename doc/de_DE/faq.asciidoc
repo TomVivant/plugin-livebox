@@ -10,7 +10,7 @@ link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PE96NM
 C'est tout à fait possible via https://github.com/guenneguezt/plugin-livebox[github]
 --
 
-.Quelle est la fréquence de rafraichissement des informations ?
+ Wie ist die Aktualisierungsrate von Informationen ?
 --
 Le plugin actualise les informations toutes les minutes (modifiable dans le "Moteur de tâches")
 --
@@ -28,7 +28,7 @@ Pour historiser il faut aller dans le menu Plugin => Communication => livebox et
 
 .Est-ce compatible avec la fibre ?
 --
-Oui
+Ja
 --
 
 .Je n'ai pas d'information sur le débit, est-ce normal ?

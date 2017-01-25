@@ -1,25 +1,25 @@
 Nous allons maintenant paramétrer l'équipement. Pour se faire, cliquer sur *Plugins / Communicaton / Livebox*
 
-Puis définir :
+Dann definieren Sie :
 
 - Eltern Objekt
-- Catégorie (optionnelle)
+- Kategorie (optional)
 - Aktivieren (standardmäßig aktiviert)
-- Visible (optionel si vous ne désirez pas le rendre visible sur le Dashboard)
+- Sichtbar' (optional, wenn Sie nicht wünschen, dass es auf dem Armaturenbrett sichtbar ist)
 - Mot de passe de la Livebox (à modifier s'il ne s'agit pas de celui par défaut)
 
 Et pour finir, cliquer sur Sauvegarder
 
 Les paramètres accessibles sont les suivants :
-- Etat
+- Zustand
 - Etat synchro
 - Etat connexion
 - Etat TV
-- IP Wan
+- Wan IP
 - IPv6 Wan
 - Dernier refresh
 - Etat Wifi ou Etat wifi 2.4G et Etat wifi 5G
-- Liste des équipements
+- Geräteliste
 
 Les commandes sont les suivantes :
 - Reboot
@@ -29,7 +29,7 @@ Les commandes sont les suivantes :
 - Désactiver wifi ou Désactiver wifi 2.4G et Désactiver wifi 5G
 
 Les paramètres suivants ne sont visible que si le protocole VOIP était activé lors de la sauvegarde de l'équipement :
-- Etat VoIP <protocole>
+- VoIP Zustand <protocole>
 - Numero de telephone <protocole>
 
 Les paramètres suivants ne sont visible qu'en connexion de type dsl ou vdsl :
