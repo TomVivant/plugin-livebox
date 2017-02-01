@@ -23,6 +23,7 @@ class livebox extends eqLogic {
     /*     * *************************Attributs****************************** */
 	public $_cookies;
 	public $_contextID;
+	public $_version = "2";
     /*     * ***********************Methode static*************************** */
 
 	public static function pull() {
@@ -49,8 +50,8 @@ class livebox extends eqLogic {
 			   'Content-Length: 0'
 			   )
 			);
+			$statuscmd = $this->getCmd(null, 'state');
 			curl_setopt($session, CURLOPT_URL, 'http://'.$this->getConfiguration('ip').'/authenticate?username='.$this->getConfiguration('username').'&password='.$this->getConfiguration('password'));
-			curl_setopt($session, CURLOPT_RETURNTRANSFER, 1 );
 			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($session, CURLOPT_COOKIESESSION, true);
 			curl_setopt($session, CURLOPT_COOKIEJAR, COOKIE_FILE);
@@ -58,17 +59,52 @@ class livebox extends eqLogic {
 			curl_setopt($session, CURLOPT_POST, true);
 
 			$json = curl_exec ($session);
-			$statuscmd = $this->getCmd(null, 'state');
-			if( $json === false ) {
-				if ( is_object($statuscmd) ) {
-					if ($statuscmd->execCmd() != 0) {
-						$statuscmd->setCollectDate('');
-						$statuscmd->event(0);
+			log::add('livebox','debug','json : '.$json);
+			$httpCode = curl_getinfo($session, CURLINFO_HTTP_CODE);
+
+			if ( $httpCode != 200 )
+			{
+				log::add('livebox','debug','version 4');
+				$this->_version = "4";
+				curl_close($session);
+				$session = curl_init();
+
+				$paramInternet = '{"service":"sah.Device.Information","method":"createContext","parameters":{"applicationName":"so_sdkut","username":"'.$this->getConfiguration('username').'","password":"'.$this->getConfiguration('password').'"}}';
+				curl_setopt($session, CURLOPT_HTTPHEADER, array(
+				   'Content-type: application/x-sah-ws-4-call+json; charset=UTF-8',
+				   'User-Agent: Orange 8.0',
+				   'Host: '.$this->getConfiguration('ip'),
+				   'Accept: */*',
+				   'Authorization: X-Sah-Login',
+				   'Content-Length: '.strlen($paramInternet)
+				   )
+				);
+				curl_setopt($session, CURLOPT_POSTFIELDS, $paramInternet); 
+				curl_setopt($session, CURLOPT_URL, 'http://'.$this->getConfiguration('ip').'/ws');
+				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($session, CURLOPT_COOKIESESSION, true);
+				curl_setopt($session, CURLOPT_COOKIEJAR, COOKIE_FILE);
+				curl_setopt($session, CURLOPT_COOKIEFILE, COOKIE_FILE);
+				curl_setopt($session, CURLOPT_POST, true);
+				curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($session, CURLOPT_SSL_VERIFYHOST, false);
+				$json = curl_exec ($session);
+				if ( $json === false ) {
+					if ( is_object($statuscmd) ) {
+						if ($statuscmd->execCmd() != 0) {
+							$statuscmd->setCollectDate('');
+							$statuscmd->event(0);
+						}
 					}
+					log::add('livebox','error',__('La livebox ne repond pas a la demande de cookie.',__FILE__)." ".$this->getName()." : ".curl_error ($session));
+					throw new Exception(__('La livebox ne repond pas a la demande de cookie.', __FILE__));
+					return false;
 				}
-				log::add('livebox','error',__('La livebox ne repond pas a la demande de cookie.',__FILE__)." ".$this->getName());
-				throw new Exception(__('La livebox ne repond pas a la demande de cookie.', __FILE__));
-				return false;
+			}
+			else
+			{
+				log::add('livebox','debug','version 2');
+				$this->_version = "2";
 			}
 			$info = curl_getinfo($session);
 			curl_close($session);
@@ -101,6 +137,7 @@ class livebox extends eqLogic {
 			$cookie= fread($file, 100000000);
 			fclose($file);
 			unlink($cookiefile);
+			
 			$cookie1 = explode ('	',$cookie);
 			$cookies = $cookie1[5].'='.$cookie1[6];
 			$this->_cookies = trim($cookies);
@@ -113,16 +150,18 @@ class livebox extends eqLogic {
 		$httpInternet = array('http' =>
 			array(
 			 'method' => 'POST',
-			 'header' => "X-Context: ".$this->_contextID."\r\n" .
-					  "Cache-Control: no-cacher\n" .
-					  "Pragma: no-cache\r\n" .
-					  "User-Agent: Java/1.7.0_40\r\n" .
-					  "Host: ".$this->getConfiguration('ip')."\r\n" .
-					  "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n" .
-					  "Connection: keep-alive\r\n" .
-					  "Content-type: application/x-www-form-urlencoded\r\n" .
-					  "Cookie: ".$this->_cookies."; path=/\r\n" .
-					  "Content-Length: ".(strlen($paramInternet)),
+			 'header' =>	"Host: ".$this->getConfiguration('ip')."\r\n" .
+							"Connection: keep-alive\r\n" .
+							"Content-Length: ".(strlen($paramInternet))."\r\n" .
+							"X-Context: ".$this->_contextID."\r\n" .
+							"Authorization: X-Sah ".$this->_contextID."\r\n" .
+							"Origin: http://".$this->getConfiguration('ip')."\r\n" .
+							"User-Agent: Jeedom plugin\r\n" .
+							"Content-type: application/x-sah-ws-4-call+json\r\n" .
+							"Accept: */*\r\n" .
+							"Accept-Encoding: gzip, deflate, br\r\n" .
+							"Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4\r\n" .
+							"Cookie: ".$this->_cookies."; ; sah/contextId=".$this->_contextID,
 			 'content' => $paramInternet
 			)
 		);
@@ -134,16 +173,15 @@ class livebox extends eqLogic {
 	}
 
 	function getPage($page, $option = array()) {
-		$default_param = '{"parameters":{}}';
 		switch ($page) {
 			case "internet":
 				$listpage = array("sysbus/NMC:getWANStatus" => "");
 				break;
 			case "wifilist":
-				$listpage = array("sysbus/NeMo/Intf/lan:getIntfs" => '{ "parameters": { "flag": "wlanradio" , "traverse" : "down"} }');
+				$listpage = array("sysbus/NeMo/Intf/lan:getIntfs" => '"flag":"wlanradio","traverse":"down"');
 				break;
 			case "dsl":
-				$listpage = array("sysbus/NeMo/Intf/data:getMIBs" => '{"parameters":{"mibs":"dsl","flag":"","traverse":"down"}}');
+				$listpage = array("sysbus/NeMo/Intf/data:getMIBs" => '"mibs":"dsl","flag":"","traverse":"down"');
 				break;
 			case "voip":
 				$listpage = array("sysbus/VoiceService/VoiceApplication:listTrunks" => "");
@@ -152,13 +190,13 @@ class livebox extends eqLogic {
 				$listpage = array("sysbus/NMC/OrangeTV:getIPTVStatus" => "");
 				break;
 			case "wifi":
-				$listpage = array("sysbus/NeMo/Intf/lan:getMIBs" => '{ "parameters": { "mibs": "wlanvap" , "flag": "" , "traverse" : "down"} }');
+				$listpage = array("sysbus/NeMo/Intf/lan:getMIBs" => '"mibs":"wlanvap","flag":"","traverse":"down"');
 				break;
 			case "reboot":
 				$listpage = array("sysbus/NMC:reboot" => "");
 				break;
 			case "wpspushbutton":
-				$listpage = array("sysbus/NeMo/Intf/lan:setWLANConfig" => '{"parameters":{"mibs":{"wlanvap":{"wl0":{"WPS":{"ConfigMethodsEnabled":"PushButton,Label,Ethernet"}}},"wl1":{"WPS":{"ConfigMethodsEnabled":"PushButton,Label,Ethernet"}}}}}}', 
+				$listpage = array("sysbus/NeMo/Intf/lan:setWLANConfig" => '"mibs":{"wlanvap":{"wl0":{"WPS":{"ConfigMethodsEnabled":"PushButton,Label,Ethernet"}}},"wl1":{"WPS":{"ConfigMethodsEnabled":"PushButton,Label,Ethernet"}}}', 
 								"sysbus/NeMo/Intf/wl0/WPS:pushButton" => '',
 								"sysbus/NeMo/Intf/wl1/WPS:pushButton" => '');
 				break;
@@ -166,17 +204,24 @@ class livebox extends eqLogic {
 				$listpage = array("sysbus/VoiceService/VoiceApplication:ring" => "");
 				break;
 			case "changewifi":
-				$listpage = array("sysbus/NeMo/Intf/lan:setWLANConfig" => '{ "parameters": {"mibs": {"penable": {"wifi'.$option[0].'_ath": {"PersistentEnable": '.$option[1].', "Enable": true}}}}}');
+				$listpage = array("sysbus/NeMo/Intf/lan:setWLANConfig" => '"mibs":{"penable":{"wifi'.$option[0].'_ath":{"PersistentEnable":'.$option[1].', "Enable":true}}}');
 				break;
 			case "devicelist":
 				$listpage = array("sysbus/Hosts:getDevices" => "");
 				break;
 		}
+		$statuscmd = $this->getCmd(null, 'state');
 		foreach ($listpage as $pageuri => $param) {
-			if ( $param == '' )
-				$param = $default_param;
+			$this->_version = 4;
+			if ( $this->_version == '4' )
+			{
+				$param = str_replace('/', '.', preg_replace('!sysbus/(.*):(.*)!i', '{"service":"$1", "method":"$2", "parameters": {'.$param.'}}', $pageuri));
+				$pageuri = 'ws';
+			} else {
+				$param = '{"parameters":{'.$param.'}}';
+			}
 			log::add('livebox','debug',$page.' => get http://'.$this->getConfiguration('ip').'/'.$pageuri);
-			$statuscmd = $this->getCmd(null, 'state');
+			log::add('livebox','debug',$page.' => param '.$param);
 			$content = @file_get_contents('http://'.$this->getConfiguration('ip').'/'.$pageuri, false, $this->getContext($param));
 			if ( $content === false ) {
 				log::add('livebox','debug',$page.' => reget http://'.$this->getConfiguration('ip').'/'.$pageuri);
@@ -192,6 +237,7 @@ class livebox extends eqLogic {
 					log::add('livebox','error',__('La livebox ne repond pas.',__FILE__)." ".$this->getName());
 					return false;
 				}
+					log::add('livebox','debug','content '.$content);
 				if (is_object($statuscmd) && $statuscmd->execCmd() != 1) {
 					$statuscmd->setCollectDate('');
 					$statuscmd->event(1);
@@ -207,7 +253,13 @@ class livebox extends eqLogic {
 		}
 		else
 		{
-			return json_decode($content, true);
+			$json = json_decode($content, true);
+			if ( $json["status"] == "" )
+			{
+				log::add('livebox','debug','Demande non traite par la livebox');
+				return false;				
+			}
+			return $json;
 		}
 	}
 
@@ -243,7 +295,7 @@ class livebox extends eqLogic {
 		if ( $this->getIsEnable() )
 		{
 			$content = $this->getPage("internet");
-			if ( $content != false ) {
+			if ( $content !== false ) {
 				if ( $content["data"]["LinkType"] == "dsl" || $content["data"]["LinkType"] == "vdsl" ) {
 					log::add('livebox','debug','Connexion mode dsl ou vdsl');
 					$cmd = $this->getCmd(null, 'debitmontant');
@@ -300,7 +352,6 @@ class livebox extends eqLogic {
 						$cmd->setEventOnly(1);
 						$cmd->save();		
 					}
-
 					$cmd = $this->getCmd(null, 'lastchange');
 					if ( ! is_object($cmd)) {
 						$cmd = new liveboxCmd();
@@ -314,6 +365,7 @@ class livebox extends eqLogic {
 						$cmd->setEventOnly(1);
 						$cmd->save();		
 					}
+
 				}
 				elseif ( $content->data->LinkType == "ethernet" ) {
 					log::add('livebox','debug','Connexion mode ethernet');
@@ -335,22 +387,21 @@ class livebox extends eqLogic {
 					$cmd = $this->getCmd(null, 'margebruitdescendant');
 					if ( is_object($cmd)) {
 						$cmd->remove();		
-					}	
+					}
 
 					$cmd = $this->getCmd(null, 'lastchange');
 					if ( is_object($cmd)) {
 						$cmd->remove();		
 					}
+
 				}			
-			} else {
-				return false;
 			}
 			$cmd = $this->getCmd(null, 'reset');
 			if ( is_object($cmd) ) {
 				$cmd->remove();		
 			}
 			$content = $this->getPage("wifilist");
-			if ( $content != false ) {
+			if ( $content !== false ) {
 				if ( count($content["status"]) == 1 ) {
 					log::add('livebox','debug','Mode Wifi');
 					$cmd = $this->getCmd(null, 'wifion');
@@ -513,7 +564,9 @@ class livebox extends eqLogic {
 				$cmd->remove();		
 			}
 			$content = $this->getPage("voip");
-			if ( $content != false ) {
+			if ( $content !== false ) {
+				log::add('livebox','debug','Mode VOIP');
+
 				if ( isset($content["status"]) )
 				{
 					log::add('livebox','debug','Mode VOIP actif');
@@ -525,44 +578,45 @@ class livebox extends eqLogic {
 							log::add('livebox','debug','Mode VOIP '.$voip["signalingProtocol"].' actif');
 							if ( strtolower($voip["trunk_lines"]["0"]["enable"]) == "enabled" ) {
 								$cmd = $this->getCmd(null, 'voipstatus'.$voip["signalingProtocol"]);
-								if ( ! is_object($cmd)) {
-									$cmd = new liveboxCmd();
-									$cmd->setName('Etat VoIP '.$voip["signalingProtocol"]);
-									$cmd->setEqLogic_id($this->getId());
-									$cmd->setLogicalId('voipstatus'.$voip["signalingProtocol"]);
-									$cmd->setUnite('');
-									$cmd->setType('info');
-									$cmd->setSubType('binary');
-									$cmd->setIsHistorized(0);
-									$cmd->setEventOnly(1);
-									$cmd->setIsVisible(1);
-									$cmd->save();		
-								}
-								$cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
-								if ( ! is_object($cmd)) {
-									$cmd = new liveboxCmd();
-									$cmd->setName('Numero de telephone '.$voip["signalingProtocol"]);
-									$cmd->setEqLogic_id($this->getId());
-									$cmd->setLogicalId('numerotelephone'.$voip["signalingProtocol"]);
-									$cmd->setUnite('');
-									$cmd->setType('info');
-									$cmd->setSubType('string');
-									$cmd->setIsHistorized(0);
-									$cmd->setEventOnly(1);
-									$cmd->setIsVisible(1);
-									$cmd->save();		
-								}
-							} else {
-								$cmd = $this->getCmd(null, 'voipstatus'.$voip["signalingProtocol"]);
-								if ( is_object($cmd)) {
-									$cmd->remove();		
-								}
-								$cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
-								if ( is_object($cmd)) {
-									$cmd->remove();		
-								}
+
+							if ( ! is_object($cmd)) {
+								$cmd = new liveboxCmd();
+								$cmd->setName('Etat VoIP '.$voip["signalingProtocol"]);
+								$cmd->setEqLogic_id($this->getId());
+								$cmd->setLogicalId('voipstatus'.$voip["signalingProtocol"]);
+								$cmd->setUnite('');
+								$cmd->setType('info');
+								$cmd->setSubType('binary');
+								$cmd->setIsHistorized(0);
+								$cmd->setEventOnly(1);
+								$cmd->setIsVisible(1);
+								$cmd->save();		
+							}
+							$cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
+							if ( ! is_object($cmd)) {
+								$cmd = new liveboxCmd();
+								$cmd->setName('Numero de telephone '.$voip["signalingProtocol"]);
+								$cmd->setEqLogic_id($this->getId());
+								$cmd->setLogicalId('numerotelephone'.$voip["signalingProtocol"]);
+								$cmd->setUnite('');
+								$cmd->setType('info');
+								$cmd->setSubType('string');
+								$cmd->setIsHistorized(0);
+								$cmd->setEventOnly(1);
+								$cmd->setIsVisible(1);
+								$cmd->save();		
 							}
 						} else {
+							$cmd = $this->getCmd(null, 'voipstatus'.$voip["signalingProtocol"]);
+							if ( is_object($cmd)) {
+								$cmd->remove();		
+							}
+							$cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
+							if ( is_object($cmd)) {
+								$cmd->remove();		
+							}
+						}
+					} else {
 							log::add('livebox','debug','Mode VOIP '.$voip["signalingProtocol"].' inactif');							
 						}
 					}
@@ -745,7 +799,7 @@ class livebox extends eqLogic {
 
 	function refreshInfo() {
 		$content = $this->getPage("internet");
-		if ( $content != false ) {
+		if ( $content !== false ) {
 			$eqLogic_cmd = $this->getCmd(null, 'linkstate');
 			if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["data"]["LinkState"])) {
 				log::add('livebox','debug','Maj linkstate');
@@ -772,11 +826,12 @@ class livebox extends eqLogic {
 			}
 			if ( $content["data"]["LinkType"] == "dsl" || $content["data"]["LinkType"] == "vdsl" ) {
 				$content = $this->getPage("dsl");
-				if ( $content != false ) {
+				if ( $content !== false ) {
 					$eqLogic_cmd = $this->getCmd(null, 'debitmontant');
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["dsl"]["dsl0"]["UpstreamCurrRate"])) {
 						log::add('livebox','debug','Maj debitmontant');
 					}
+
 					$eqLogic_cmd->setCollectDate('');
 					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["UpstreamCurrRate"]);
 
@@ -784,6 +839,7 @@ class livebox extends eqLogic {
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["dsl"]["dsl0"]["DownstreamCurrRate"])) {
 						log::add('livebox','debug','Maj debitdescendant');
 					}
+
 					$eqLogic_cmd->setCollectDate('');
 					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["DownstreamCurrRate"]);
 
@@ -791,9 +847,9 @@ class livebox extends eqLogic {
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["dsl"]["dsl0"]["UpstreamNoiseMargin"]/10)) {
 						log::add('livebox','debug','Maj margebruitmontant');
 					}
+
 					$eqLogic_cmd->setCollectDate('');
 					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["UpstreamNoiseMargin"]/10);
-
 					$eqLogic_cmd = $this->getCmd(null, 'margebruitdescendant');
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["dsl"]["dsl0"]["DownstreamNoiseMargin"])/10) {
 						log::add('livebox','debug','Maj margebruitdescendant');
@@ -807,31 +863,33 @@ class livebox extends eqLogic {
 					}
 					$eqLogic_cmd->setCollectDate('');
 					$eqLogic_cmd->event($content["status"]["dsl"]["dsl0"]["LastChange"]);
-				}
+
 			}
 		}
 		$content = $this->getPage("voip");
-		if ( $content != false ) {
+		if ( $content !== false ) {
 			foreach ( $content["status"] as $voip ) {
 				if ( ! isset($voip["signalingProtocol"]) ) {
 					$voip["signalingProtocol"] = strstr($voip["name"], "-", true);
 				}
-				$eqLogic_cmd = $this->getCmd(null, 'voipstatus'.$voip["signalingProtocol"]);
-				if (is_object($eqLogic_cmd) && $eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($voip["trunk_lines"]["0"]["status"])) {
-					log::add('livebox','debug','Maj voipstatus '.$voip["signalingProtocol"]);
-					$eqLogic_cmd->setCollectDate('');
-					$eqLogic_cmd->event($voip["trunk_lines"]["0"]["status"]);
-				}
-				$eqLogic_cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
-				if (is_object($eqLogic_cmd) && $eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($voip["trunk_lines"]["0"]["directoryNumber"])) {
-					log::add('livebox','debug','Maj numerotelephone '.$voip["signalingProtocol"]);
-					$eqLogic_cmd->setCollectDate('');
-					$eqLogic_cmd->event($voip["trunk_lines"]["0"]["directoryNumber"]);
+
+					$eqLogic_cmd = $this->getCmd(null, 'voipstatus'.$voip["signalingProtocol"]);
+					if (is_object($eqLogic_cmd) && $eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($voip["trunk_lines"]["0"]["status"])) {
+						log::add('livebox','debug','Maj voipstatus '.$voip["signalingProtocol"]);
+						$eqLogic_cmd->setCollectDate('');
+						$eqLogic_cmd->event($voip["trunk_lines"]["0"]["status"]);
+					}
+					$eqLogic_cmd = $this->getCmd(null, 'numerotelephone'.$voip["signalingProtocol"]);
+					if (is_object($eqLogic_cmd) && $eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($voip["trunk_lines"]["0"]["directoryNumber"])) {
+						log::add('livebox','debug','Maj numerotelephone '.$voip["signalingProtocol"]);
+						$eqLogic_cmd->setCollectDate('');
+						$eqLogic_cmd->event($voip["trunk_lines"]["0"]["directoryNumber"]);
+					}
 				}
 			}
 		}
 		$content = $this->getPage("tv");
-		if ( $content != false ) {
+		if ( $content !== false ) {
 			$eqLogic_cmd = $this->getCmd(null, 'tvstatus');
 			if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["data"]["IPTVStatus"])) {
 				log::add('livebox','debug','Maj tvstatus');
@@ -840,10 +898,10 @@ class livebox extends eqLogic {
 			}
 		}
 		$content = $this->getPage("wifilist");
-		if ( $content != false ) {
+		if ( $content !== false ) {
 			if ( count($content["status"]) == 1 ) {
 				$content = $this->getPage("wifi");
-				if ( $content != false ) {
+				if ( $content !== false ) {
 					$eqLogic_cmd = $this->getCmd(null, 'wifistatus');
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["wlanvap"]["wl0"]["VAPStatus"])) {
 						log::add('livebox','debug','Maj wifistatus');
@@ -853,7 +911,7 @@ class livebox extends eqLogic {
 				}
 			} elseif ( count($content["status"]) == 2 ) {
 				$content = $this->getPage("wifi");
-				if ( $content != false ) {
+				if ( $content !== false ) {
 					$eqLogic_cmd = $this->getCmd(null, 'wifi2.4status');
 					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["wlanvap"]["wl0"]["VAPStatus"])) {
 						log::add('livebox','debug','Maj wifi2.4status');
@@ -870,7 +928,7 @@ class livebox extends eqLogic {
 			}
 		}
 		$content = $this->getPage("devicelist");
-		if ( $content != false ) {
+		if ( $content !== false ) {
 			$eqLogic_cmd = $this->getCmd(null, 'devicelist');
 			$devicelist = array();
 			if ( isset($content["status"]) )
@@ -976,7 +1034,7 @@ class liveboxCmd extends cmd
                         $_value = 1;
                     } else if ($_value == 'available') {
                         $_value = 1;
-                    } else if ((is_numeric(intval($_value)) && intval($_value) > 1) || $_value == 1) {
+                    } else if ( (is_numeric( intval($_value) ) && intval($_value) > 1) || $_value == 1 ) {
                         $_value = 1;
                     } else {
 					   $_value = 0;
