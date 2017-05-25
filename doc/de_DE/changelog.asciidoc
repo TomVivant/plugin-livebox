@@ -1,21 +1,28 @@
 [horizontal]
 WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plugin-livebox/commits/master[Historique Commit]
 
-1.16:: reboot Befehl hinzugefügt
-1.15:: Ajout du delai de changement d'état de la synchro ADSL en seconde
-1.14:: Mise a jour des indicateurs, même si la valeur ne change pas pour les graphiques.
-1.13:: Ajout de bouton "WPS Push Button"
-+ Liste der Geräte
-1.12:: Correction de variable cachees pour Cookies.
-1.11:: Modification de cron pour plus d'autonomie.
-1.10:: Ajout des informations de marge montante et descendante.
-1.9:: Support de plusieurs livebox.
-1.8:: Correction par rapport au nouveau core.
-1.7:: Mehrere Fehler behoben
-1.6:: Correction pour désinstallation sans livebox
-1.5:: Ajout de lien vers les options d'affichage
-1.4:: Ajout d'un Etat de livebox
-1.3:: Correction pour la téléphonie en H.323
-1.2:: Optimisation pour ne pas mettre à jour les données si elle le sont déjà.
-1.1:: Suppression de commande reset
-1.0:: Erste version beta.
+Liste des évolutions majeures de la version courante :
+
+- Modification pour compatibilité Jeedom V3
+- Plus de suivi de version
+
+Anciennes évolutions :
+
+- Ajout de la commande reboot
+- Ajout du delai de changement d'état de la synchro ADSL en seconde
+- Mise a jour des indicateurs, même si la valeur ne change pas pour les graphiques.
+- Ajout de bouton "WPS Push Button"
+- Liste des équipements
+- Correction de variable cachees pour Cookies.
+- Modification de cron pour plus d'autonomie.
+- Ajout des informations de marge montante et descendante.
+- Support de plusieurs livebox.
+- Correction par rapport au nouveau core.
+- Correction bug de collecte
+- Correction pour désinstallation sans livebox
+- Ajout de lien vers les options d'affichage
+- Ajout d'un Etat de livebox
+- Correction pour la téléphonie en H.323
+- Optimisation pour ne pas mettre à jour les données si elle le sont déjà.
+- Suppression de commande reset
+- Première version bêta

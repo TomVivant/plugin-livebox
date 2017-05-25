@@ -40,3 +40,7 @@ L'API de la livebox en mode FTTH ne fourni pas le débit. Nous ne pouvons donc p
 --
 Le plugin ne suporte pas certains caractères spéciaux genre # et @.
 --
+
+.Je change de livebox, faut-il faire quelque chose ?
+--
+Il est nécessaire de resauvegarder l'équipement livebox pour que le plugin gère bien la détection du model.
