@@ -25,10 +25,6 @@
         "Mes Livebox": "Mes Livebox",
         "Supprimer": "Supprimer"
     },
-    "plugins\/livebox\/plugin_info\/configuration.php": {
-        "Faire un don au développeur": "Faire un don au développeur",
-        "Faire un don via Paypal au développeur": "Faire un don via Paypal au développeur"
-    },
     "plugins\/livebox\/core\/class\/livebox.class.php": {
         "La livebox ne repond pas a la demande de cookie.": "La livebox ne repond pas a la demande de cookie.",
         "La livebox ne repond pas.": "La livebox ne repond pas.",
