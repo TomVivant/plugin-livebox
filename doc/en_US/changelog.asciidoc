@@ -3,11 +3,12 @@ WARNING: Updates full details on : https://github.com/guenneguezt/plugin-livebox
 
 Liste des évolutions majeures de la version courante :
 
-- Modification pour compatibilité Jeedom V3
-- Plus de suivi de version
+- Correction lors de la sauvegarde de la livebox
 
 Anciennes évolutions :
 
+- Modification pour compatibilité Jeedom V3
+- Plus de suivi de version
 - Ajout de la commande reboot
 - Ajout du delai de changement d'état de la synchro ADSL en seconde
 - Mise a jour des indicateurs, même si la valeur ne change pas pour les graphiques.
