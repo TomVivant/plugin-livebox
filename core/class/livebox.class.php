@@ -36,7 +36,7 @@ class livebox extends eqLogic {
 		if ( ! isset($this->_cookies) )
 		{
 			log::add('livebox','debug','get cookies');
-			$cookiefile = dirname(__FILE__) . "/../../../../tmp/livebox.cookie";
+			$cookiefile =  jeedom::getTmpFolder('livebox') . "/livebox.cookie";
 			if ( ! defined("COOKIE_FILE") ) {
 				define("COOKIE_FILE", $cookiefile);
 			}
@@ -111,18 +111,18 @@ class livebox extends eqLogic {
 			$obj = json_decode($json);
 			if ( ! isset($obj->data->contextID) ) {
 				log::add('livebox','debug','unable to get contextID');
-				throw new Exception(__('Le compte est incorrecte.', __FILE__));
+				throw new Exception(__('Le compte est incorrect.', __FILE__));
 				return false;
 			}
 			$this->_contextID = $obj->data->contextID;
 			if ( ! file_exists ($cookiefile) )
 			{
-				log::add('livebox','error',__('Le compte est incorrecte.',__FILE__));
+				log::add('livebox','error',__('Le compte est incorrect.',__FILE__));
 				if ($statuscmd->execCmd() != 0) {
 					$statuscmd->setCollectDate('');
 					$statuscmd->event(0);
 				}
-				throw new Exception(__('Le compte est incorrecte.', __FILE__));
+				throw new Exception(__('Le compte est incorrect.', __FILE__));
 				return false;
 			}
 			if (is_object($statuscmd) && $statuscmd->execCmd() != 1) {

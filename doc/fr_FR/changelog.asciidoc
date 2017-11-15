@@ -3,10 +3,11 @@ WARNING: Detail complet des mises à jour sur https://github.com/guenneguezt/plu
 
 Liste des évolutions majeures de la version courante :
 
-- Correction lors de la sauvegarde de la livebox
+- Correction de problème de compte
 
 Anciennes évolutions :
 
+- Correction lors de la sauvegarde de la livebox
 - Modification pour compatibilité Jeedom V3
 - Plus de suivi de version
 - Ajout de la commande reboot
