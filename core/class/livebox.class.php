@@ -919,7 +919,7 @@ class livebox extends eqLogic {
 						$eqLogic_cmd->event($content["status"]["wlanvap"]["wl0"]["VAPStatus"]);
 					}
 					$eqLogic_cmd = $this->getCmd(null, 'wifi5status');
-					if ($eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["wlanvap"]["wl1"]["VAPStatus"])) {
+					if ( isset($content["status"]["wlanvap"]["wl1"]) && $eqLogic_cmd->execCmd() != $eqLogic_cmd->formatValue($content["status"]["wlanvap"]["wl1"]["VAPStatus"])) {
 						log::add('livebox','debug','Maj wifi5status');
 						$eqLogic_cmd->setCollectDate('');
 						$eqLogic_cmd->event($content["status"]["wlanvap"]["wl1"]["VAPStatus"]);
