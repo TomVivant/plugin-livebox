@@ -17,24 +17,24 @@
         "Sous-Type": "Subtipo",
         "Paramètres": "Parámetros",
         "Action": "Acción",
-        "Sauvegarder": "Salvar",
-        "Ajouter une livebox": "Ajouter une livebox",
-        "Rechercher": "Rechercher",
-        "Gestion": "Gestion",
-        "Configuration": "Configuration",
-        "Mes Livebox": "Mes Livebox",
-        "Supprimer": "Supprimer"
+        "Sauvegarder": "Guardar",
+        "Ajouter une livebox": "Agregar un livebox",
+        "Rechercher": "Buscar",
+        "Gestion": "Gestión",
+        "Configuration": "Configuración",
+        "Mes Livebox": "Mis Livebox",
+        "Supprimer": "Borrar"
     },
     "plugins\/livebox\/core\/class\/livebox.class.php": {
-        "La livebox ne repond pas a la demande de cookie.": "La livebox ne repond pas a la demande de cookie.",
-        "La livebox ne repond pas.": "La livebox ne repond pas.",
-        "Le compte est incorrecte.": "Le compte est incorrecte."
+        "La livebox ne repond pas a la demande de cookie.": "El Livebox no responde a la solicitud de cookie.",
+        "La livebox ne repond pas.": "El Livebox no responde.",
+        "Le compte est incorrecte.": "La cuenta es incorrecta."
     },
     "plugins\/livebox\/desktop\/js\/livebox.js": {
-        "Nom": "Nom",
-        "Historiser": "Historiser",
-        "Afficher": "Afficher",
-        "Tester": "Tester",
-        "Accèder à l'interface de la livebox": "Accèder à l'interface de la livebox"
+        "Nom": "Nombre",
+        "Historiser": "Historizar",
+        "Afficher": "Mostrar",
+        "Tester": "Prueba",
+        "Accèder à l'interface de la livebox": "Acceder al interfaz de livebox"
     }
 }
