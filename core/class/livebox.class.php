@@ -16,7 +16,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+require_once __DIR__ . '/../../../../core/php/core.inc.php';
 
 class livebox extends eqLogic
 {
@@ -32,6 +32,11 @@ class livebox extends eqLogic
         }
     }
 
+    /**
+     * 
+     * @return boolean
+     * @throws \Exception
+     */
     public function getCookiesInfo()
     {
         if (!isset($this->_cookies)) {
@@ -139,6 +144,11 @@ class livebox extends eqLogic
         return true;
     }
 
+    /**
+     * 
+     * @param type $paramInternet
+     * @return type
+     */
     public function getContext($paramInternet)
     {
         $httpInternet = array('http' =>
@@ -162,12 +172,21 @@ class livebox extends eqLogic
         return stream_context_create($httpInternet);
     }
 
+    /**
+     * 
+     */
     public function logOut()
     {
         @file_get_contents('http://' . $this->getConfiguration('ip') . '/logout');
     }
 
-    public function getPage($page, $option = array())
+    /**
+     * 
+     * @param type $page
+     * @param type $option
+     * @return boolean
+     */
+    public function getPage($page,array $option = array())
     {
         switch ($page) {
             case "internet":
@@ -251,7 +270,10 @@ class livebox extends eqLogic
             return $json;
         }
     }
-
+    /**
+     * 
+     * @return type
+     */
     public function preUpdate()
     {
         if ($this->getIsEnable()) {
@@ -278,6 +300,9 @@ class livebox extends eqLogic
       }
      */
 
+    /**
+     * 
+     */
     public function postUpdate()
     {
         if ($this->getIsEnable()) {
@@ -778,7 +803,10 @@ class livebox extends eqLogic
             }
         }
     }
-
+    
+    /**
+     * 
+     */
     public function refreshInfo()
     {
         $content = $this->getPage("internet");
@@ -934,7 +962,13 @@ class livebox extends eqLogic
 
 class liveboxCmd extends cmd
 {
-
+    /**
+     * 
+     * @param type $_options
+     * @return boolean
+     * @throws \Exception
+     * @throws Exception
+     */
     public function execute($_options = null)
     {
         $eqLogic = $this->getEqLogic();
@@ -977,7 +1011,7 @@ class liveboxCmd extends cmd
         }
         if ($page !== null) {
             $eqLogic->getCookiesInfo();
-            $content = $eqLogic->getPage($page, $option);
+            $content = $eqLogic->getPage($page, $option); //variable innutilsé ! à garder ?
             if ($this->getLogicalId() != "reboot") {
                 $eqLogic->refreshInfo();
                 $eqLogic->logOut();
@@ -987,11 +1021,17 @@ class liveboxCmd extends cmd
                 $eqLogic->logOut();
             }
         } else {
-            throw new Exception(__('Commande non implémentée actuellement', __FILE__));
+            throw new \Exception(__('Commande non implémentée actuellement', __FILE__));
         }
         return true;
     }
-
+    
+    /**
+     * 
+     * @param type $_value
+     * @param type $_quote
+     * @return string|int
+     */
     public function formatValue($_value, $_quote = false)
     {
         if (trim($_value) == '') {
