@@ -28,12 +28,12 @@ Les commandes sont les suivantes :
 - Activer wifi ou Activer wifi 2.4G et Activer wifi 5G
 - Désactiver wifi ou Désactiver wifi 2.4G et Désactiver wifi 5G
 
-Les paramètres suivants ne sont visible que si le protocole VOIP était activé lors de la sauvegarde de l'équipement :
+Les paramètres suivants ne sont visibles que si le protocole VOIP était activé lors de la sauvegarde de l'équipement :
 - Etat VoIP <protocole>
-- Numero de telephone <protocole>
+- Numéro de téléphone <protocole>
 
-Les paramètres suivants ne sont visible qu'en connexion de type dsl ou vdsl :
-- Debit montant
-- Debit descendant
+Les paramètres suivants ne sont visibles qu'en connexion de type dsl ou vdsl :
+- Débit montant
+- Débit descendant
 - Marge de bruit montant
 - Marge de bruit descendant
