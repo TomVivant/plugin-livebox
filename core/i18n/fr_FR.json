@@ -1,16 +1,16 @@
 {
     "plugins\/livebox\/desktop\/php\/livebox.php": {
         "Général": "Général",
-        "Nom de la livebox": "Nom de la livebox",
+        "Nom de la livebox": "Nom de la Livebox",
         "Objet parent": "Objet parent",
         "Aucun": "Aucun",
         "Catégorie": "Catégorie",
         "Activer": "Activer",
         "Accéder à la carte": "Accéder à la carte",
         "Visible": "Visible",
-        "IP de la livebox": "IP de la livebox",
-        "Compte de la livebox": "Compte de la livebox",
-        "Password de la livebox": "Password de la livebox",
+        "IP de la livebox": "IP de la Livebox",
+        "Compte de la livebox": "Compte de la Livebox",
+        "Password de la livebox": "Password de la Livebox",
         "Indicateurs": "Indicateurs",
         "Nom": "Nom",
         "Icône-action": "Icône-action",
@@ -18,7 +18,7 @@
         "Paramètres": "Paramètres",
         "Action": "Action",
         "Sauvegarder": "Sauvegarder",
-        "Ajouter une livebox": "Ajouter une livebox",
+        "Ajouter une livebox": "Ajouter une Livebox",
         "Rechercher": "Rechercher",
         "Gestion": "Gestion",
         "Configuration": "Configuration",
@@ -26,15 +26,15 @@
         "Supprimer": "Supprimer"
     },
     "plugins\/livebox\/core\/class\/livebox.class.php": {
-        "La livebox ne repond pas a la demande de cookie.": "La livebox ne repond pas a la demande de cookie.",
-        "La livebox ne repond pas.": "La livebox ne repond pas.",
-        "Le compte est incorrecte.": "Le compte est incorrecte."
+        "La livebox ne repond pas a la demande de cookie.": "La Livebox ne répond pas à la demande de cookie.",
+        "La livebox ne repond pas.": "La Livebox ne répond pas.",
+        "Le compte est incorrecte.": "Le compte est incorrect."
     },
     "plugins\/livebox\/desktop\/js\/livebox.js": {
         "Nom": "Nom",
         "Historiser": "Historiser",
         "Afficher": "Afficher",
         "Tester": "Tester",
-        "Accèder à l'interface de la livebox": "Accèder à l'interface de la livebox"
+        "Accèder à l'interface de la livebox": "Accéder à l'interface de la Livebox"
     }
 }
