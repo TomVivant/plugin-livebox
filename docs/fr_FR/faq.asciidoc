@@ -4,22 +4,22 @@
 Ce plugin est gratuit pour que chacun puisse en profiter simplement. Si vous souhaitez tout de même faire un don au développeur du plugin, merci de me faire un MP sur le forum.
 --
 
-.J'aimerai remonter des erreurs/modifications directement dans le code ?
+.J'aimerais remonter des erreurs/modifications directement dans le code ?
 --
 C'est tout à fait possible via https://github.com/guenneguezt/plugin-livebox[github]
 --
 
-.Quelle est la fréquence de rafraichissement des informations ?
+.Quelle est la fréquence de rafraîchissement des informations ?
 --
 Le plugin actualise les informations toutes les minutes (modifiable dans le "Moteur de tâches")
 --
 
 .Est-il possible d'historiser les débits ?
 --
-Pour historiser il faut aller dans le menu Plugin => Communication => livebox et d'activer l'historique sur les indicateurs comme pour n'import quel indicateur.
+Pour historiser, il faut aller dans le menu Plugin => Communication => Livebox et activer l'historique sur les indicateurs comme pour n'importe quel indicateur.
 --
 
-.Avec quel livebox est-ce compatible ?
+.Avec quel Livebox est-ce compatible ?
 --
 - Livebox 2
 - Livebox Play
@@ -32,14 +32,14 @@ Oui
 
 .Je n'ai pas d'information sur le débit, est-ce normal ?
 --
-L'API de la livebox en mode FTTH ne fourni pas le débit. Nous ne pouvons donc pas le récupérer.
+L'API de la livebox en mode FTTH ne fournit pas le débit. Nous ne pouvons donc pas le récupérer.
 --
 
-.Le mot de passe que je saisie ne fonctionne pas.
+.Le mot de passe que je saisis ne fonctionne pas.
 --
 Le plugin ne suporte pas certains caractères spéciaux genre # et @.
 --
 
-.Je change de livebox, faut-il faire quelque chose ?
+.Je change de Livebox, faut-il faire quelque chose ?
 --
-Il est nécessaire de resauvegarder l'équipement livebox pour que le plugin gère bien la détection du model.
+Il est nécessaire de resauvegarder l'équipement Livebox pour que le plugin gère bien la détection du modèle.
