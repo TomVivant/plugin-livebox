@@ -222,12 +222,11 @@ class livebox extends eqLogic
                 $listpage = array("sysbus/NeMo/Intf/lan:setWLANConfig" => '"mibs":{"penable":{"wifi' . $option[0] . '_ath":{"PersistentEnable":' . $option[1] . ', "Enable":true}}}');
                 break;
             case "devicelist":
-                $listpage = array("sysbus/Hosts:getDevices" => "");
+                $listpage = array("sysbus/Devices:get" => "");
                 break;
         }
         $statuscmd = $this->getCmd(null, 'state');
         foreach ($listpage as $pageuri => $param) {
-            $this->_version = 4;
             if ($this->_version == '4') {
                 $param   = str_replace('/', '.', preg_replace('!sysbus/(.*):(.*)!i', '{"service":"$1", "method":"$2", "parameters": {' . $param . '}}', $pageuri));
                 $pageuri = 'ws';
@@ -943,8 +942,8 @@ class livebox extends eqLogic
             $devicelist  = array();
             if (isset($content["status"])) {
                 foreach ($content["status"] as $equipement) {
-                    if ($equipement["active"]) {
-                        array_push($devicelist, $equipement["hostName"]);
+                    if ($equipement["Active"]) {
+                        array_push($devicelist, $equipement["Name"]);
                     }
                 }
             }
