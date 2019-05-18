@@ -943,7 +943,10 @@ class livebox extends eqLogic
             if (isset($content["status"])) {
                 foreach ($content["status"] as $equipement) {
                     if ($equipement["Active"]) {
-                        array_push($devicelist, $equipement["Name"]);
+                        $tags = explode(' ',$equipement["Tags"]);
+                        if(!in_array('self',$tags)){
+                            array_push($devicelist, $equipement["Name"]);
+                        }
                     }
                 }
             }
