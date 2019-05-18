@@ -944,7 +944,8 @@ class livebox extends eqLogic
                 foreach ($content["status"] as $equipement) {
                     if ($equipement["Active"]) {
                         $tags = explode(' ',$equipement["Tags"]);
-                        if(!in_array('self',$tags)){
+                        // On veut que le device soit connecté en ethernet ou wifi
+                        if((in_array('eth', $tags) || in_array('wifi', $tags)) && !in_array('self', $tags)){
                             array_push($devicelist, $equipement["Name"]);
                         }
                     }
